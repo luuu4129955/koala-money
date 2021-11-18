@@ -16,7 +16,7 @@ export default {
 
 <style lang="scss" scoped>
 .icon{
-  width: 1em;
-  height: 1em;
+  width: 2em;
+  height: 2em;
 }
 </style>

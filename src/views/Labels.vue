@@ -1,7 +1,6 @@
 <template>
 <div>
   <Layout>Labels.vue</Layout>
-
 </div>
 </template>
 
