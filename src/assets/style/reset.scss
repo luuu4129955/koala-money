@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  letter-spacing: 2px;
+}
+a{
+  text-decoration: none;
+  &:visited{
+    color: inherit;
+  }
+}
+button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+input{
+  outline: none;
+  border: 0px;
+  background-color: inherit;
+}
