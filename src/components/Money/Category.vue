@@ -25,22 +25,7 @@ export default class Category extends Vue {
     this.category = category;
   }
 }
-// export default {
-//   name: 'Category',
-//   data() {
-//     return {
-//       category: '-'//'-'表示支出，'+'表示收入
-//     };
-//   },
-//   methods: {
-//     selectCategory(category){
-//       if (category !== '-' && category !== '+') {
-//         throw new Error('category is unknown');
-//       }
-//       this.category = category;
-//     }
-//   }
-// };
+
 </script>
 
 <style lang="scss" scoped>

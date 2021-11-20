@@ -13,14 +13,13 @@
 
 <script lang="ts">
 import Board from '@/components/Money/Board.vue';
-import Output from '@/components/Money/Output.vue';
 import Category from '@/components/Money/Category.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 
 export default {
   name: 'Money',
-  components: {Tags, Notes, Category, Output, Board}
+  components: {Tags, Notes, Category, Board}
 };
 </script>
 
