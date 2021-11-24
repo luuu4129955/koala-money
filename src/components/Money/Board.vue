@@ -23,7 +23,7 @@
       <div class="result">
         <button @click="clear" class="clear">清空</button>
         <button @click="back" class="back">←</button>
-        <button class="ok">OK</button>
+        <button @click="ok" class="ok">OK</button>
       </div>
     </div>
   </div>
@@ -38,7 +38,6 @@ export default class Board extends Vue {
   output = '0';
 
   inputContent(event: MouseEvent) {
-    console.log(event.target.textContent);
     const button = event.target.textContent;
     const input = (button as string);
     if (this.output.length === 16) {
@@ -64,6 +63,9 @@ export default class Board extends Vue {
 
   clear(){
     this.output='0'
+  }
+  ok(){
+    this.$emit('update:value',this.output)
   }
 }
 </script>

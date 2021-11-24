@@ -1,30 +1,50 @@
 <template>
   <div>
     <Layout class-prefix="layout">
-      <Tags :data-source.sync="tags"/>
-      <Notes/>
-      <Category/>
-      <Output/>
-      <Board/>
+      {{record}}
+      <Tags :data-source.sync="tags" @update:value="ouUpdateTags"/>
+      <Notes @update:value="ouUpdateNotes"/>
+      <Category :value.sync="record.category" />
+      <Board @update:value="onUpdateAmount"/>
     </Layout>
   </div>
 
 </template>
 
-<script lang="js">
+<script lang="ts">
+import {Component, Vue} from 'vue-property-decorator';
+
 import Board from '@/components/Money/Board.vue';
 import Category from '@/components/Money/Category.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 
-export default {
-  name: 'Money',
-  components: {Tags, Notes, Category, Board},
-  data() {
-    return {tags: ['衣', '食', '住']}
+type Record = {
+  tags: string[],
+  notes: string,
+  category: string,
+  amount: number
+}
+
+@Component({
+  components: {Tags, Notes, Category, Board}
+})
+export default class Money extends Vue {
+  tags = ['衣', '食', '住'];
+  record: Record = {tags: [], notes: '', category: '-', amount: 0};
+
+  ouUpdateTags(value: string[]) {
+    this.record.tags=value
   }
 
-};
+  ouUpdateNotes(value: string) {
+    this.record.notes=value
+  }
+
+  onUpdateAmount(value: string) {
+    this.record.amount=value
+  }
+}
 </script>
 
 <style lang="scss">

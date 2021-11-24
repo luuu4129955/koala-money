@@ -12,18 +12,20 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import {Component} from 'vue-property-decorator';
+import Vue from 'vue';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
 export default class Category extends Vue {
-  category = '-'//'-'表示支出，'+'表示收入
-  selectCategory(category:string ) {
+  @Prop() readonly category!: string;
+
+  selectCategory(category: string) {
     if (category !== '-' && category !== '+') {
       throw new Error('category is unknown');
     }
-    this.category = category;
+    this.$emit('update:value',category)
   }
+
 }
 
 </script>
