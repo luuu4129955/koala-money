@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout class-prefix="layout">
-      <Tags/>
+      <Tags :data-source="tags"/>
       <Notes/>
       <Category/>
       <Output/>
@@ -11,7 +11,7 @@
 
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Board from '@/components/Money/Board.vue';
 import Category from '@/components/Money/Category.vue';
 import Notes from '@/components/Money/Notes.vue';
@@ -19,7 +19,11 @@ import Tags from '@/components/Money/Tags.vue';
 
 export default {
   name: 'Money',
-  components: {Tags, Notes, Category, Board}
+  components: {Tags, Notes, Category, Board},
+  data() {
+    return {tags: ['衣', '食', '住']}
+  }
+
 };
 </script>
 
