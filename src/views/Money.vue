@@ -5,14 +5,14 @@
       <Tags :data-source.sync="tags" @update:value="ouUpdateTags"/>
       <Notes @update:value="ouUpdateNotes"/>
       <Category :value.sync="record.category" />
-      <Board @update:value="onUpdateAmount"/>
+      <Board @update:value="onUpdateAmount" @submit="saveRecord"/>
     </Layout>
   </div>
 
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+import {Component, Vue, Watch} from 'vue-property-decorator';
 
 import Board from '@/components/Money/Board.vue';
 import Category from '@/components/Money/Category.vue';
@@ -31,6 +31,7 @@ type Record = {
 })
 export default class Money extends Vue {
   tags = ['衣', '食', '住'];
+  recordList:Record[]=[];
   record: Record = {tags: [], notes: '', category: '-', amount: 0};
 
   ouUpdateTags(value: string[]) {
@@ -43,6 +44,15 @@ export default class Money extends Vue {
 
   onUpdateAmount(value: string) {
     this.record.amount=value
+  }
+  saveRecord(){
+    const record2=JSON.parse(JSON.stringify(this.record))
+    this.recordList.push(record2)
+    console.log(this.recordList)
+  }
+  @Watch('recordList')
+  onRecordListChange(){
+    window.localStorage.setItem('recordList',JSON.stringify(this.recordList))
   }
 }
 </script>
