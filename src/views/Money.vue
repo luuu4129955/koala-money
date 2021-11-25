@@ -1,10 +1,10 @@
 <template>
   <div>
     <Layout class-prefix="layout">
-      {{record}}
+      {{ record }}
       <Tags :data-source.sync="tags" @update:value="ouUpdateTags"/>
       <Notes @update:value="ouUpdateNotes"/>
-      <Category :value.sync="record.category" />
+      <Category :value.sync="record.category"/>
       <Board @update:value="onUpdateAmount" @submit="saveRecord"/>
     </Layout>
   </div>
@@ -18,42 +18,44 @@ import Board from '@/components/Money/Board.vue';
 import Category from '@/components/Money/Category.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
+import model from '@/model';
 
-type Record = {
-  tags: string[],
-  notes: string,
-  category: string,
-  amount: number
-  createdAt:Date
-}
+const recordList = model.fetch();
+
+
 
 @Component({
   components: {Tags, Notes, Category, Board}
 })
 export default class Money extends Vue {
   tags = ['衣', '食', '住'];
-  recordList:Record[]=[];
-  record: Record = {tags: [], notes: '', category: '-', amount: 0};
+  // eslint-disable-next-line no-undef
+  recordList: RecordItem[] = recordList;
+  // eslint-disable-next-line no-undef
+  record: RecordItem = {tags: [], notes: '', category: '-', amount: 0};
 
   ouUpdateTags(value: string[]) {
-    this.record.tags=value
+    this.record.tags = value;
   }
 
   ouUpdateNotes(value: string) {
-    this.record.notes=value
+    this.record.notes = value;
   }
 
   onUpdateAmount(value: string) {
-    this.record.amount=value
+    this.record.amount = value;
   }
-  saveRecord(){
-    const record2:Record=JSON.parse(JSON.stringify(this.record))
-    record2.createdAt=new Date()
-    this.recordList.push(record2)
+
+  saveRecord() {
+    // eslint-disable-next-line no-undef
+    const record2: RecordItem = model.clone(this.record);
+    record2.createdAt = new Date();
+    this.recordList.push(record2);
   }
+
   @Watch('recordList')
-  onRecordListChange(){
-    window.localStorage.setItem('recordList',JSON.stringify(this.recordList))
+  onRecordListChange() {
+    model.save(this.recordList);
   }
 }
 </script>
