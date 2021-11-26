@@ -18,44 +18,45 @@ import Board from '@/components/Money/Board.vue';
 import Category from '@/components/Money/Category.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
-import model from '@/model';
+import recordListModel from '@/models/recordListModel';
+import tagListModel from '@/models/tagListModel';
 
-const recordList = model.fetch();
-
+const recordList = recordListModel.fetch();
+const tagList=tagListModel.fetch()
 
 
 @Component({
   components: {Tags, Notes, Category, Board}
 })
 export default class Money extends Vue {
-  tags = ['衣', '食', '住'];
+  tags =tagList
   // eslint-disable-next-line no-undef
   recordList: RecordItem[] = recordList;
   // eslint-disable-next-line no-undef
   record: RecordItem = {tags: [], notes: '', category: '-', amount: 0};
 
-  ouUpdateTags(value: string[]) {
+  ouUpdateTags(value: string[]) :()=>void{
     this.record.tags = value;
   }
 
-  ouUpdateNotes(value: string) {
+  ouUpdateNotes(value: string):()=>void {
     this.record.notes = value;
   }
 
-  onUpdateAmount(value: string) {
+  onUpdateAmount(value: string) :()=>void{
     this.record.amount = value;
   }
 
-  saveRecord() {
+  saveRecord():()=>void {
     // eslint-disable-next-line no-undef
-    const record2: RecordItem = model.clone(this.record);
+    const record2: RecordItem = recordListModel.clone(this.record);
     record2.createdAt = new Date();
     this.recordList.push(record2);
   }
 
   @Watch('recordList')
-  onRecordListChange() {
-    model.save(this.recordList);
+  onRecordListChange():()=>void {
+    recordListModel.save(this.recordList);
   }
 }
 </script>

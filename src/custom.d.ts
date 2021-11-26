@@ -6,3 +6,4 @@
     amount: number,
     createdAt: Date,
   }
+
