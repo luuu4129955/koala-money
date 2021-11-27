@@ -1,5 +1,5 @@
 <template>
-  <div class="btn" >新增标签</div>
+  <div class="btn" ><slot/></div>
 </template>
 
 <script lang="ts">
