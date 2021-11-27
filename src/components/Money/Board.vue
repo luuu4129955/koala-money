@@ -76,6 +76,7 @@ export default class Board extends Vue {
 .board {
   display: flex;
   flex-direction: column;
+  background-color: #fff;
 
   .board-output {
     text-align: right;

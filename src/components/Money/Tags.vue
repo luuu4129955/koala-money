@@ -48,7 +48,7 @@ export default class Tags extends Vue {
 .tags {
   flex-grow: 1;
   overflow: auto;
-
+  background-color: #fff;
   li {
     display: inline-block;
     padding: 0 10px;

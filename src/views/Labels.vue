@@ -42,27 +42,31 @@ export default class Labels extends Vue {
 @import "~@/assets/style/helper.scss";
 
 $f: 18px;
-li {
-  display: flex;
-  justify-content: space-between;
+.tags-list{
+  background-color: #fff;
 
-  border-bottom: 1px solid #e0e0e0;
-  margin: 0 $f;
-  padding: $f/2 $f;
+  li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 0 $f;
+    padding: $f/2 $f;
 
-  span {
-    font-size: $f;
-    font-family: $font-family;
-    color: #a1dd9d;
+    span {
+      font-size: $f;
+      font-family: $font-family;
+      color: #a1dd9d;
 
-  }
+    }
 
-  .icon {
-    width: $f;
-    height: $f;
-    fill: #a1dd9d
+    .icon {
+      width: $f;
+      height: $f;
+      fill: #a1dd9d
+    }
   }
 }
+
 
 .tag-add {
   text-align: center;

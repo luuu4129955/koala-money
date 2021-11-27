@@ -29,6 +29,7 @@ nav {
   justify-content: space-around;
   padding: 4px 0;
   box-shadow: 0 0 2px #888;
+  background-color: #fff;
 
   & > a {
     display: flex;
