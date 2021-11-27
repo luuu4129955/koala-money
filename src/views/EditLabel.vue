@@ -5,16 +5,17 @@
       <span>编辑标签</span>
       <span></span>
     </div>
-    <notes></notes>
+    <FormItem placeholder="">标签名</FormItem>
   </Layout>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import Notes from '@/components/Money/Notes.vue';
+import FormItem from '@/components/Money/FormItem.vue';
+
 @Component({
-  components: {Notes}
+  components: {FormItem}
 })
 export default class EditLabel extends Vue {
 
@@ -22,7 +23,7 @@ export default class EditLabel extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.topNav{
+.topNav {
   display: flex;
   justify-content: space-between;
   background-color: #a2dd9e;
@@ -31,11 +32,15 @@ export default class EditLabel extends Vue {
   padding: 20px 18px;
   text-align: center;
   align-items: center;
-  .icon{
+
+  .icon {
     width: 20px;
     height: 20px;
     fill: #fff;
   }
 
+}
+.notes{
+  background-color: #fff;
 }
 </style>

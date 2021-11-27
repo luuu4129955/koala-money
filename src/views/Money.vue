@@ -3,7 +3,7 @@
     <Layout class-prefix="layout">
       {{ record }}
       <Tags :data-source.sync="tags" @update:value="ouUpdateTags"/>
-      <Notes @update:value="ouUpdateNotes"/>
+      <FormItem @update:value="ouUpdateNotes" placeholder="请在这里添加备注">备注</FormItem>
       <Category :value.sync="record.category"/>
       <Board @update:value="onUpdateAmount" @submit="saveRecord"/>
     </Layout>
@@ -16,8 +16,8 @@ import {Component, Vue, Watch} from 'vue-property-decorator';
 
 import Board from '@/components/Money/Board.vue';
 import Category from '@/components/Money/Category.vue';
-import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
+import FormItem from '@/components/Money/FormItem.vue';
 import recordListModel from '@/models/recordListModel';
 import tagListModel from '@/models/tagListModel';
 
@@ -26,7 +26,7 @@ const tagList=tagListModel.fetch()
 
 
 @Component({
-  components: {Tags, Notes, Category, Board}
+  components: {FormItem, Tags,  Category, Board}
 })
 export default class Money extends Vue {
   tags =tagList

@@ -1,31 +1,32 @@
 <template>
   <div class="notes">
-    备注
+    <slot></slot>
     <label>
       <input type="text" v-model="value"
-             placeholder="在这里添加备注">
+             :placeholder="placeholder">
     </label>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Watch} from 'vue-property-decorator';
+import {Component, Prop, Watch} from 'vue-property-decorator';
 
 @Component
 export default class Notes extends Vue {
+  @Prop(String) placeholder: string | undefined;
   value = '';
-@Watch('value')
-  onValueChanged(value:string,oldValue:string){
-  this.$emit('update:value',value)
-}
+
+  @Watch('value')
+  onValueChanged(value: string, oldValue: string) {
+    this.$emit('update:value', value);
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .notes {
   padding: 10px 10px;
-  background-color: #f5f8fd;
 
   input {
     font-size: inherit;
