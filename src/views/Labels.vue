@@ -2,12 +2,15 @@
   <div>
     <Layout>
       <div class="tags-list">
-        <ul>
-          <li v-for="tag in tags" :key="tag">
-            <span>{{ tag }}</span>
-            <Icon name="rightArrow"/>
-          </li>
-        </ul>
+
+        <router-link class="tag"
+                     v-for="tag in tags" :key="tag"
+                     :to="`/labels/edit/1`"
+        >
+          <span>{{ tag }}</span>
+          <Icon name="rightArrow"/>
+        </router-link>
+
       </div>
       <Button class="tag-add" @click="addTag">新增标签</Button>
     </Layout>
@@ -31,10 +34,10 @@ export default class Labels extends Vue {
     const name = window.prompt('请输入标签名');
     if (name) {
       const message = tagListModel.add(name);
-      if (message==='duplicated'){
-        window.alert('标签名重复')
-      }else if (message==='success'){
-        return
+      if (message === 'duplicated') {
+        window.alert('标签名重复');
+      } else if (message === 'success') {
+        return;
       }
     }
   }
@@ -45,10 +48,10 @@ export default class Labels extends Vue {
 @import "~@/assets/style/helper.scss";
 
 $f: 18px;
-.tags-list{
+.tags-list {
   background-color: #fff;
 
-  li {
+  .tag {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #e0e0e0;
@@ -69,7 +72,8 @@ $f: 18px;
     }
   }
 }
-.tag-add{
+
+.tag-add {
   background-color: #ffb850;
   color: #fff;
 }
