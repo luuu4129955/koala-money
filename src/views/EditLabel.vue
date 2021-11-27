@@ -6,6 +6,7 @@
       <span></span>
     </div>
     <FormItem placeholder="">标签名</FormItem>
+    <Button class="remove">删除标签</Button>
   </Layout>
 </template>
 
@@ -13,9 +14,10 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
+import Button from '@/components/Money/Button.vue';
 
 @Component({
-  components: {FormItem}
+  components: {Button, FormItem}
 })
 export default class EditLabel extends Vue {
 
@@ -42,5 +44,9 @@ export default class EditLabel extends Vue {
 }
 .notes{
   background-color: #fff;
+}
+.remove{
+  background-color: #f76361;
+  color: #fff;
 }
 </style>

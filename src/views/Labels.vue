@@ -9,7 +9,7 @@
           </li>
         </ul>
       </div>
-      <div class="tag-add" @click="addTag">新增标签</div>
+      <Button class="tag-add" @click="addTag">新增标签</Button>
     </Layout>
   </div>
 </template>
@@ -18,9 +18,12 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import tagListModel from '@/models/tagListModel';
+import Button from '@/components/Money/Button.vue';
 
 tagListModel.fetch;
-@Component
+@Component({
+  components: {Button}
+})
 export default class Labels extends Vue {
   tags = tagListModel.data;
 
@@ -66,16 +69,8 @@ $f: 18px;
     }
   }
 }
-
-
-.tag-add {
-  text-align: center;
-  margin: 64px $f 0 $f;
-  padding: $f/2 $f;
+.tag-add{
   background-color: #ffb850;
   color: #fff;
-  border-radius: 8px;
-  letter-spacing: 6px;
-  font-family: $font-family;
 }
 </style>
