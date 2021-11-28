@@ -4,11 +4,11 @@
       <div class="tags-list">
 
         <router-link class="tag"
-                     v-for="tag in tags" :key="tag"
-                     :to="`/labels/edit/1`"
+                     v-for="tag in tags" :key="tag.name"
+                     :to="`/labels/edit/${tag.id}`"
         >
-          <span>{{ tag }}</span>
-          <Icon name="rightArrow"/>
+          <span>{{ tag.name }}</span>
+          <Icon name="edit"/>
         </router-link>
 
       </div>
@@ -31,6 +31,7 @@ export default class Labels extends Vue {
   tags = tagListModel.data;
 
   addTag(): () => void {
+
     const name = window.prompt('请输入标签名');
     if (name) {
       const message = tagListModel.add(name);

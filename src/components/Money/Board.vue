@@ -22,7 +22,9 @@
       </div>
       <div class="result">
         <button @click="clear" class="clear">清空</button>
-        <button @click="back" class="back">←</button>
+        <button @click="back" class="back">
+          <Icon name="backspace"></Icon>
+        </button>
         <button @click="ok" class="ok">OK</button>
       </div>
     </div>
@@ -140,7 +142,11 @@ export default class Board extends Vue {
 
       .clear {background-color: #f76361;}
 
-      .back {background-color: #ffb850;}
+      .back {background-color: #ffb850;
+      .icon{
+        fill: #fff;
+      }
+      }
 
       .ok {background-color: #a2dd9e;}
     }

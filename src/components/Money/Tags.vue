@@ -2,9 +2,9 @@
   <div class="tags">
     <div class="tags-list">
       <ul>
-        <li v-for="tag in dataSource " :key="tag"
-            :class="{selected:selectedTags.indexOf(tag)>=0}"
-            @click="toggle(tag)">{{ tag }}
+        <li v-for="tag in tags " :key="tag"
+            :class="{selected:selectedTags.indexOf(tag.name)>=0}"
+            @click="toggle(tag.name)">{{ tag.name }}
         </li>
       </ul>
     </div>
@@ -15,11 +15,14 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
+import tagListModel from '@/models/tagListModel';
 
 @Component
 export default class Tags extends Vue {
   @Prop() readonly dataSource: string[] | undefined;
   selectedTags: string[] = [];
+  tags=tagListModel.data
+
 
   toggle(tag: string) {
     const index = this.selectedTags.indexOf(tag);
@@ -32,6 +35,7 @@ export default class Tags extends Vue {
   }
 
   create() {
+    console.log(this.tags);
     const name = window.prompt('请输入标签');
     if (name === '') {
       window.alert('标签名不能为空');
