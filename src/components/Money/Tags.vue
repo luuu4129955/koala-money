@@ -8,7 +8,7 @@
         </li>
       </ul>
     </div>
-    <button @click="create" class="tags-add">新增标签</button>
+    <button @click="add" class="tags-add">新增标签</button>
   </div>
 </template>
 
@@ -19,7 +19,7 @@ import tagListModel from '@/models/tagListModel';
 
 @Component
 export default class Tags extends Vue {
-  @Prop() readonly dataSource: string[] | undefined;
+  // @Prop() readonly dataSource: string[] | undefined;
   selectedTags: string[] = [];
   tags=tagListModel.data
 
@@ -34,13 +34,20 @@ export default class Tags extends Vue {
     this.$emit('update:value',this.selectedTags)
   }
 
-  create() {
-    console.log(this.tags);
-    const name = window.prompt('请输入标签');
-    if (name === '') {
-      window.alert('标签名不能为空');
-    } else if (this.dataSource) {
-      this.$emit('update:dataSource', [...this.dataSource, name]);
+  add() {
+    const name = window.prompt('请输入标签名');
+    // if (name === '') {
+    //   window.alert('标签名不能为空');
+    // } else if (this.dataSource) {
+    //   this.$emit('update:dataSource', [...this.dataSource, name]);
+    // }
+    if (name) {
+      const message = tagListModel.add(name);
+      if (message === 'duplicated') {
+        window.alert('标签名重复');
+      } else if (message === 'success') {
+        return;
+      }
     }
   }
 

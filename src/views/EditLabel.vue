@@ -7,9 +7,12 @@
       <span>编辑标签</span>
       <span></span>
     </div>
-    <FormItem placeholder="" :value="tag.name"
-              @update:value="update">标签名
+    <FormItem :placeholder="tag.name" :value="tag.name"
+              @update:value="update"
+    >标签名
     </FormItem>
+
+    <Button class="confirm" @click="xxx">确认修改</Button>
     <Button class="remove" @click="remove">删除标签</Button>
   </Layout>
 </template>
@@ -27,6 +30,7 @@ import tagListModel from '@/models/tagListModel';
 export default class EditLabel extends Vue {
   tag?: { id: string, name: string } = undefined;
 
+
   created() {
     const id = this.$route.params.id;
     tagListModel.fetch;
@@ -41,15 +45,21 @@ export default class EditLabel extends Vue {
 
   remove() {
     if (this.tag) {
-      tagListModel.remove(this.tag.id, name);
+      tagListModel.remove(this.tag.id);
+      this.$router.push({path: '/labels'});
     }
   }
 
   update(name: string) {
     if (this.tag) {
-      tagListModel.update(this.tag.id, name);
+      tagListModel.update(this.tag.id,name);
     }
   }
+
+  xxx(value: string) {
+    console.log(value);
+  }
+
 }
 </script>
 
@@ -74,8 +84,14 @@ export default class EditLabel extends Vue {
   background-color: #fff;
 }
 
+.confirm {
+  background-color: #a2dd9e;
+  color: #fff;
+}
+
 .remove {
   background-color: #f76361;
   color: #fff;
+  margin-top: 10px;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout class-prefix="layout">
-      {{ record }}
+{{record}}
       <Tags :data-source.sync="tags" @update:value="ouUpdateTags"/>
       <FormItem @update:value="ouUpdateNotes" placeholder="请在这里添加备注">备注</FormItem>
       <Category :value.sync="record.category"/>
