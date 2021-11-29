@@ -28,7 +28,7 @@ tagListModel.fetch;
   components: {Button}
 })
 export default class Labels extends Vue {
-  tags = tagListModel.data;
+  tags = window.tagList;
 
   addTag(): () => void {
 
