@@ -25,7 +25,7 @@ import store from '@/store/index2';
 })
 export default class Money extends Vue {
 
-  recordList= window.recordList;
+  recordList= store.recordList;
   // eslint-disable-next-line no-undef
   record: RecordItem = {tags: [], notes: '', category: '-', amount: 0};
 
