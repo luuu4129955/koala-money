@@ -18,6 +18,7 @@ import Board from '@/components/Money/Board.vue';
 import Category from '@/components/Money/Category.vue';
 import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
+import store from '@/store/index2';
 
 @Component({
   components: {FormItem, Tags,  Category, Board}
@@ -40,8 +41,8 @@ export default class Money extends Vue {
     this.record.amount = value;
   }
 
-  saveRecord():()=>void {
-    window.createRecord(this.record)
+  saveRecord() {
+    store.createRecord(this.record)
   }
 
 

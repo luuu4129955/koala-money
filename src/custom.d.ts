@@ -2,7 +2,7 @@ type RecordItem = {
   tags: string[],
   notes: string,
   category: string,
-  amount: number,
+  amount: string,
   createdAt: Date,
 }
 type Tag = {
@@ -17,13 +17,14 @@ type TagListModel = {
   update: (id: string, name: string) => 'success' | 'not found' | 'duplicated'
   remove: (id: string) => boolean
 }
-
-interface Window {
+type Store= {
   tagList: Tag[];
   addTag: (name: string) => void;
   findTag: (id: string) => Tag;
   removeTag: (id: string) => boolean;
   updateTag: (id: string, name: string) => 'success' | 'not found' | 'duplicated';
   recordList: RecordItem[];
-  createRecord:(record:RecordItem)=>void
-}
+  createRecord: (record: RecordItem) => void
+};
+
+
