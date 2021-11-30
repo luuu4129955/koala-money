@@ -12,24 +12,19 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue, Watch} from 'vue-property-decorator';
+import {Component, Vue} from 'vue-property-decorator';
 
 import Board from '@/components/Money/Board.vue';
 import Category from '@/components/Money/Category.vue';
 import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
-import recordListModel from '@/models/recordListModel';
-
-const recordList = recordListModel.fetch();
-
 
 @Component({
   components: {FormItem, Tags,  Category, Board}
 })
 export default class Money extends Vue {
 
-  // eslint-disable-next-line no-undef
-  recordList: RecordItem[] = recordList;
+  recordList= window.recordList;
   // eslint-disable-next-line no-undef
   record: RecordItem = {tags: [], notes: '', category: '-', amount: 0};
 
@@ -46,13 +41,10 @@ export default class Money extends Vue {
   }
 
   saveRecord():()=>void {
-    recordListModel.create(this.record)
+    window.createRecord(this.record)
   }
 
-  @Watch('recordList')
-  onRecordListChange():()=>void {
-    recordListModel.save(this.recordList);
-  }
+
 }
 </script>
 
