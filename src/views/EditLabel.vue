@@ -22,37 +22,33 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Money/Button.vue';
-import tagListModel from '@/models/tagListModel';
 
 @Component({
   components: {Button, FormItem}
 })
 export default class EditLabel extends Vue {
-  tag?: { id: string, name: string } = undefined;
+  tag=window.findTag(this.$route.params.id);
 
 
   created() {
-    const id = this.$route.params.id;
-    tagListModel.fetch;
-    const tags = tagListModel.data;
-    const tag = tags.filter(t => t.id.toString() === id)[0];
-    if (tag) {
-      this.tag = tag;
-    } else {
+    if (!this.tag) {
       this.$route.replace('/404');
     }
   }
 
   remove() {
     if (this.tag) {
-      tagListModel.remove(this.tag.id);
-      this.$router.push({path: '/labels'});
+      if (window.removeTag(this.tag.id)){
+        this.$router.push({path:'/labels'})
+      }else{
+        window.alert('删除失败')
+      }
     }
   }
 
   update(name: string) {
     if (this.tag) {
-      tagListModel.update(this.tag.id,name);
+      window.updateTag(this.tag.id,name)
     }
   }
 

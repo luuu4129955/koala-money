@@ -14,14 +14,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
-import tagListModel from '@/models/tagListModel';
+import {Component} from 'vue-property-decorator';
 
 @Component
 export default class Tags extends Vue {
-  // @Prop() readonly dataSource: string[] | undefined;
   selectedTags: string[] = [];
-  tags=tagListModel.data
+  tags = window.tagList;
 
 
   toggle(tag: string) {
@@ -31,18 +29,13 @@ export default class Tags extends Vue {
     } else {
       this.selectedTags.push(tag);
     }
-    this.$emit('update:value',this.selectedTags)
+    this.$emit('update:value', this.selectedTags);
   }
 
   add() {
     const name = window.prompt('请输入标签名');
     if (name) {
-      const message = tagListModel.add(name);
-      if (message === 'duplicated') {
-        window.alert('标签名重复');
-      } else if (message === 'success') {
-        return;
-      }
+      window.addTag(name);
     }
   }
 
@@ -55,6 +48,7 @@ export default class Tags extends Vue {
   flex-grow: 1;
   overflow: auto;
   background-color: #fff;
+
   li {
     display: inline-block;
     padding: 0 10px;

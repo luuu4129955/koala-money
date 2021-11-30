@@ -20,10 +20,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import tagListModel from '@/models/tagListModel';
 import Button from '@/components/Money/Button.vue';
 
-tagListModel.fetch;
+
 @Component({
   components: {Button}
 })
