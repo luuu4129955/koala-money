@@ -12,7 +12,7 @@
         </router-link>
 
       </div>
-      <Button class="tag-add" @click="addTag">新增标签</Button>
+      <Button class="tag-add" @click="createTag">新增标签</Button>
     </Layout>
   </div>
 </template>
@@ -21,23 +21,21 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Button from '@/components/Money/Button.vue';
-
-
+import TagHelper from '@/mixins/TagHelper';
+import {mixins} from 'vue-class-component';
 
 @Component({
-  components: {Button}
-})
-export default class Labels extends Vue {
-  //TODO
-  tags =[];// store.tagList;
+  components: {Button},
 
-  addTag(): () => void {
-
-    const name = window.prompt('请输入标签名');
-    if (name) {
-      //TODO
-      // store.addTag(name)
+  computed: {
+    tags() {
+      return this.$store.state.tagList;
     }
+  }
+})
+export default class Labels extends mixins(TagHelper) {
+  create() {
+    this.$store.commit('fetchTags');
   }
 }
 </script>
