@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout class-prefix="layout">
-{{record}}
+      {{ record }}
       <Tags :data-source.sync="tags" @update:value="ouUpdateTags"/>
       <FormItem @update:value="ouUpdateNotes" placeholder="请在这里添加备注">备注</FormItem>
       <Category :value.sync="record.category"/>
@@ -18,31 +18,39 @@ import Board from '@/components/Money/Board.vue';
 import Category from '@/components/Money/Category.vue';
 import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
-import store from '@/store/index2';
+
 
 @Component({
-  components: {FormItem, Tags,  Category, Board}
+  components: {FormItem, Tags, Category, Board},
+  computed: {
+    recordList() {
+      return this.$store.state.recordList;
+    }
+  }
 })
 export default class Money extends Vue {
+  store = this.$store;
 
-  recordList= store.recordList;
+created(){
+  this.$store.commit('fetchRecords')
+}
   // eslint-disable-next-line no-undef
   record: RecordItem = {tags: [], notes: '', category: '-', amount: 0};
 
-  ouUpdateTags(value: string[]) :()=>void{
+  ouUpdateTags(value: string[]): () => void {
     this.record.tags = value;
   }
 
-  ouUpdateNotes(value: string):()=>void {
+  ouUpdateNotes(value: string): () => void {
     this.record.notes = value;
   }
 
-  onUpdateAmount(value: string) :()=>void{
+  onUpdateAmount(value: string): () => void {
     this.record.amount = value;
   }
 
   saveRecord() {
-    store.createRecord(this.record)
+    this.$store.commit('createRecord',this.record)
   }
 
 
