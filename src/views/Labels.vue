@@ -18,7 +18,6 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Button from '@/components/Money/Button.vue';
 import TagHelper from '@/mixins/TagHelper';
@@ -34,7 +33,7 @@ import {mixins} from 'vue-class-component';
   }
 })
 export default class Labels extends mixins(TagHelper) {
-  create() {
+  created() {
     this.$store.commit('fetchTags');
   }
 }

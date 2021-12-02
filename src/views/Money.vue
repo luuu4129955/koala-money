@@ -31,9 +31,10 @@ import FormItem from '@/components/Money/FormItem.vue';
 export default class Money extends Vue {
   store = this.$store;
 
-created(){
-  this.$store.commit('fetchRecords')
-}
+  created() {
+    this.$store.commit('fetchRecords');
+  }
+
   // eslint-disable-next-line no-undef
   record: RecordItem = {tags: [], notes: '', category: '-', amount: 0};
 
@@ -50,7 +51,7 @@ created(){
   }
 
   saveRecord() {
-    this.$store.commit('createRecord',this.record)
+    this.$store.commit('createRecord', this.record);
   }
 
 

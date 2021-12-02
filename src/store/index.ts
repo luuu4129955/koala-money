@@ -6,12 +6,17 @@ import createId from '@/lib/createId';
 Vue.use(Vuex);
 
 const localStorageKeyName = 'recordList';
-
+type RootState = {
+  recordList: RecordItem[],
+  tagList: Tag[],
+  currentTag?: Tag
+}
 const store = new Vuex.Store({
   state: {
-    recordList: [] as RecordItem[],
-    tagList: [] as Tag[],
-  },
+    recordList: [],
+    tagList: [],
+    currentTag: undefined
+  } as RootState,
   mutations: {
     //Record
     fetchRecords(state) {
@@ -31,9 +36,9 @@ const store = new Vuex.Store({
 
     //Tag
     fetchTags(state) {
-      return state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
+      state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
     },
-    addTag(state,name: string) {
+    addTag(state, name: string) {
       console.log('执行了addTag');
       const names = state.tagList.map(item => item.name);
       if (names.indexOf(name) >= 0) {
@@ -42,11 +47,27 @@ const store = new Vuex.Store({
       }
       const id = createId().toString();
       state.tagList.push({id, name: name});
-      store.commit('saveTags')
+      store.commit('saveTags');
       return 'success';
     },
     saveTags(state) {
       window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
+    },
+
+    //  editLabel
+    setCurrentTag(state, id: string) {
+      state.currentTag = state.tagList.filter(t => t.id === id)[0];
+    },
+    removeTag(state,id:string){
+      let index = -1;
+      for (let i = 0; i < state.tagList.length; i++) {
+        if (state.tagList[i].id === id) {
+          index = i;
+          break;
+        }
+      }
+      state.tagList.splice(index, 1);
+      store.commit('saveTags');
     }
   },
 });
