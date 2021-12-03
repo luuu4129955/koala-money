@@ -2,7 +2,7 @@
   <div>
     <Layout class-prefix="layout">
       {{ record }}
-      <Tags :data-source.sync="tags" @update:value="ouUpdateTags"/>
+      <Tags :data-source.sync="record.tags" @update:value="ouUpdateTags"/>
       <FormItem @update:value="ouUpdateNotes" placeholder="请在这里添加备注">备注</FormItem>
       <Category :value.sync="record.category"/>
       <Board @update:value="onUpdateAmount" @submit="saveRecord"/>
@@ -29,32 +29,26 @@ import FormItem from '@/components/Money/FormItem.vue';
   }
 })
 export default class Money extends Vue {
-  store = this.$store;
+  // eslint-disable-next-line no-undef
+  record: RecordItem = {tags: [], notes: '', category: '-', amount: '0', createdAt: new Date(2000, 1, 1)};
 
   created() {
     this.$store.commit('fetchRecords');
   }
 
-  // eslint-disable-next-line no-undef
-  record: RecordItem = {tags: [], notes: '', category: '-', amount: 0};
-
-  ouUpdateTags(value: string[]): () => void {
-    this.record.tags = value;
+  ouUpdateTags(value:string){
+    this.record.tags.push(value)
+  }
+  ouUpdateNotes(value:string){
+    this.record.notes=value
+  }
+  onUpdateAmount(value:string){
+    this.record.amount=value
   }
 
-  ouUpdateNotes(value: string): () => void {
-    this.record.notes = value;
+  saveRecord(){
+    this.$store.commit('createRecord',this.record)
   }
-
-  onUpdateAmount(value: string): () => void {
-    this.record.amount = value;
-  }
-
-  saveRecord() {
-    this.$store.commit('createRecord', this.record);
-  }
-
-
 }
 </script>
 

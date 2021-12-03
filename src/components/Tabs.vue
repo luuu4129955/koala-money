@@ -1,38 +1,39 @@
 <template>
-  <div>
-    <ul class="category">
-      <li :class="{[classPrefix+'-item']:classPrefix,selected:value==='-'}"
-          @click="selectCategory('-')">支出
-      </li>
-      <li :class="{[classPrefix+'-item']:classPrefix,selected:value==='+'}"
-          @click="selectCategory('+')">收入
-      </li>
-    </ul>
-  </div>
+  <ul class="tabs">
+    <li v-for="item in dataSource" :key="item.value"
+        :class="liClass" @click="select(item)">{{ item.text }}
+    </li>
+  </ul>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import {Component, Prop} from 'vue-property-decorator';
 
+type DataSourceItem = { text: string, value: string }
+
 @Component
-export default class Category extends Vue {
+export default class Tabs extends Vue {
+  @Prop({required: true, type: Array})
+  dataSource!: { text: string, value: string }[];
   @Prop(String) readonly value!: string;
   @Prop(String) classPrefix?: string;
 
-  selectCategory(category: string) {
-    if (category !== '-' && category !== '+') {
-      throw new Error('category is unknown');
-    }
-    this.$emit('update:value', category);
+  liClass(item: DataSourceItem) {
+    return {
+      selected: item.value === this.value,
+      [this.classPrefix + '-tabs-item']: this.classPrefix
+    };
   }
 
+  select(item: DataSourceItem) {
+    this.$emit('update:value', item.value);
+  }
 }
-
 </script>
 
 <style lang="scss" scoped>
-.category {
+.tabs {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -57,5 +58,5 @@ export default class Category extends Vue {
     }
   }
 }
-</style>
 
+</style>
