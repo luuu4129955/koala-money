@@ -27,6 +27,7 @@ import TagHelper from '@/mixins/TagHelper';
 })
 export default class Tags extends mixins(TagHelper) {
   selectedTags: string[] = [];
+
   created() {
     this.$store.commit('fetchTags');
   }
@@ -49,6 +50,7 @@ export default class Tags extends mixins(TagHelper) {
   flex-grow: 1;
   overflow: auto;
   background-color: #fff;
+  padding: 14px;
 
   li {
     display: inline-block;

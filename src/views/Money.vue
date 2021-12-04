@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout class-prefix="layout">
-      {{ record }}
+
       <Tags :data-source.sync="record.tags" @update:value="ouUpdateTags"/>
       <FormItem @update:value="ouUpdateNotes" placeholder="请在这里添加备注">备注</FormItem>
       <Tabs :value.sync="record.category" :data-source="categoryList" class-prefix="money"/>
@@ -15,14 +15,13 @@
 import {Component, Vue} from 'vue-property-decorator';
 
 import Board from '@/components/Money/Board.vue';
-import Category from '@/components/Money/Category.vue';
 import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import Tabs from '@/components/Tabs.vue';
 
 
 @Component({
-  components: {Tabs, FormItem, Tags, Category, Board},
+  components: {Tabs, FormItem, Tags, Board},
   computed: {
     recordList() {
       return this.$store.state.recordList;
@@ -68,15 +67,15 @@ export default class Money extends Vue {
   flex-direction: column;
 }
 
-::v-deep .money-tabs-item{
-  &.selected::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: #120142;
+::v-deep .money-tabs {
+  background-color: #c4c4c4;
+
+  .tabs.items.selected {
+    background-color: #a2dd9e;
+
+    &::after {
+      display: none;
+    }
   }
 }
 </style>

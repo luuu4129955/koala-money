@@ -79,7 +79,7 @@ export default class EditLabel extends Vue {
 
 }
 
-.notes {
+.FormItem {
   background-color: #fff;
 }
 

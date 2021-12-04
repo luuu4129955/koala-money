@@ -34,6 +34,8 @@ nav {
   & > a {
     display: flex;
     flex-direction: column;
+    color: #888;
+    fill: #888;
 
     &.selected {
       fill: #a2dd9e;

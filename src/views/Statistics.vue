@@ -1,31 +1,30 @@
 <template>
   <Layout>
-    <Tabs :data-source="array2" class-prefix="category" :value.sync="yyy" ></Tabs>
-    <Tabs :data-source="array" class-prefix="interval" :value.sync="hhh"></Tabs>
+    <Tabs :data-source="categoryList" class-prefix="category" :value.sync="category"></Tabs>
+    <Tabs :data-source="internalList" class-prefix="interval" :value.sync="interval"></Tabs>
   </Layout>
 </template>
 
 <script lang="ts">
-import Category from '@/components/Money/Category.vue';
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
 
 @Component({
-  components: {Tabs, Category}
+  components: {Tabs}
 })
 export default class statistics extends Vue {
-  yyy = '-';
-  hhh='day'
-  array = [
+  category = '-';
+  interval = 'day';
+  internalList = [
     {text: '按天', value: 'day'},
     {text: '按周', value: 'week'},
     {text: '按月', value: 'mouth'}
   ];
-  array2=[
-    {text:'支出',value:'-'},
-    {text:'收入',value:'+'},
-  ]
+  categoryList = [
+    {text: '支出', value: '-'},
+    {text: '收入', value: '+'},
+  ];
 }
 </script>
 
@@ -39,6 +38,14 @@ export default class statistics extends Vue {
     &::after {
       display: none;
     }
+  }
+}
+
+::v-deep .interval-tabs {
+  .tabs-item{
+    font-size: 16px;
+    height: 32px;
+    padding: 4px 0;
   }
 }
 </style>

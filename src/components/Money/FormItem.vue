@@ -1,5 +1,5 @@
 <template>
-  <div class="notes">
+  <div class="FormItem">
     <slot></slot>
     <label>
       <input type="text" v-model="value"
@@ -26,7 +26,7 @@ export default class Notes extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.notes {
+.FormItem {
   padding: 10px 10px;
 
   input {
