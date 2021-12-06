@@ -30,7 +30,7 @@ import Tabs from '@/components/Tabs.vue';
 })
 export default class Money extends Vue {
   // eslint-disable-next-line no-undef
-  record: RecordItem = {tags: [], notes: '', category: '-', amount: '0', createdAt: new Date(2000, 1, 1)};
+  record: RecordItem = {tags: [], notes: '', category: '-', amount: '0', createdAt: ''};
   categoryList = [
     {text: '支出', value: '-'},
     {text: '收入', value: '+'},

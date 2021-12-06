@@ -40,7 +40,7 @@ export default class Board extends Vue {
   output = '0';
 
   inputContent(event: MouseEvent) {
-    const button = event.target.textContent;
+    const button = event.target?.textContent;
     const input = (button as string);
     if (this.output.length === 16) {
       return;
