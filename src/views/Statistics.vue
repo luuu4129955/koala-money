@@ -1,10 +1,9 @@
 <template>
   <Layout>
     <Tabs :data-source="categoryList" class-prefix="category" :value.sync="category"></Tabs>
-    <Tabs :data-source="internalList" class-prefix="interval" :value.sync="interval"></Tabs>
     <ol>
       <li v-for="(group,index) in groupedList" :key="index">
-        <h3 class="title">{{ beautify(group.title) }}</h3>
+        <h3 class="title">{{ beautify(group.title) }}<span>{{group.total}}</span></h3>
         <ol>
           <li v-for="item in group.items" :key="item.id"
               class="record">
@@ -29,7 +28,6 @@ import clone from '@/lib/clone';
   components: {Tabs}
 })
 export default class statistics extends Vue {
-  // eslint-disable-next-line no-undef
   tagString(tags: Tag[]) {
     return tags.length === 0 ? '无' : tags.join(',');
   }
@@ -59,18 +57,24 @@ export default class statistics extends Vue {
     if (recordList.length === 0) {
       return [];
     }
-    const newList = clone(recordList).sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
-    const result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
-    for (let i=1;i<newList.length;i++){
-      const current=newList[i];
-      const last=result[result.length-1];
-      if (dayjs(last.title).isSame(dayjs(current.createdAt),'day')){
-        last.items.push(current)
-      }else {
-        result.push({title: dayjs(current.createdAt).format('YYYY-MM-DD'),items:[current]})
+    const newList = clone(recordList)
+        .filter(r => r.category === this.category)
+        .sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
+    // eslint-disable-next-line no-undef
+    type Result={title:string,total?:number,items:RecordItem[]}[];
+    const result:Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
+    for (let i = 1; i < newList.length; i++) {
+      const current = newList[i];
+      const last = result[result.length - 1];
+      if (dayjs(last.title).isSame(dayjs(current.createdAt), 'day')) {
+        last.items.push(current);
+      } else {
+        result.push({title: dayjs(current.createdAt).format('YYYY-MM-DD'), items: [current]});
       }
     }
-
+result.forEach(group=>{
+  group.total=group.items.reduce((sum,item)=>sum+item.amount,0)
+})
     return result;
   }
 
@@ -80,11 +84,6 @@ export default class statistics extends Vue {
 
   category = '-';
   interval = 'day';
-  internalList = [
-    {text: '按天', value: 'day'},
-    {text: '按周', value: 'week'},
-    {text: '按月', value: 'mouth'}
-  ];
   categoryList = [
     {text: '支出', value: '-'},
     {text: '收入', value: '+'},
