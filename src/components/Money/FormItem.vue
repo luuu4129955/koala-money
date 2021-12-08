@@ -28,10 +28,12 @@ export default class Notes extends Vue {
 <style lang="scss" scoped>
 .FormItem {
   padding: 10px 10px;
+  display: flex;
+  align-items: center;
 
   input {
     font-size: inherit;
-    padding-left: 8px;
+    padding-left: 16px;
   }
 }
 </style>

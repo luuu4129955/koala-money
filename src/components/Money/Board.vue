@@ -69,8 +69,12 @@ export default class Board extends Vue {
   ok(){
     const number=parseFloat(this.output)
     this.$emit('update:value',number)
+    if(this.output==='0'){
+      return window.alert('金额不能为0！')
+    }
     this.$emit('submit',number)
     this.output='0'
+    return window.alert('成功添加一笔记账！')
   }
 }
 </script>

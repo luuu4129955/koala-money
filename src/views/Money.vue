@@ -3,7 +3,9 @@
     <Layout class-prefix="layout">
 
       <Tags :data-source.sync="record.tags" @update:value="ouUpdateTags"/>
-      <FormItem @update:value="ouUpdateNotes" placeholder="请在这里添加备注">备注</FormItem>
+      <FormItem @update:value="ouUpdateNotes" placeholder="在这里添加备注~">
+        <Icon name="notes"></Icon>
+      </FormItem>
       <Tabs :value.sync="record.category" :data-source="categoryList" class-prefix="money"/>
       <Board @update:value="onUpdateAmount" @submit="saveRecord"/>
     </Layout>
