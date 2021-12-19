@@ -1,8 +1,7 @@
 <template>
   <div>
     <Layout class-prefix="layout">
-
-      <Tags :data-source.sync="record.tags" @update:value="ouUpdateTags"/>
+      <Tags :xxx.sync="record.tag.name" @update:value="ouUpdateTags"/>
       <FormItem @update:value="ouUpdateNotes" placeholder="在这里添加备注~">
         <Icon name="notes"></Icon>
       </FormItem>
@@ -32,7 +31,14 @@ import Tabs from '@/components/Tabs.vue';
 })
 export default class Money extends Vue {
   // eslint-disable-next-line no-undef
-  record: RecordItem = {tags: [], notes: '', category: '-', amount: '0', createdAt: ''};
+  record: RecordItem = {
+    tag: {id: 'foods', name: '餐饮'},
+    notes: '',
+    category: '-',
+    amount: '0',
+    createdAt: ''
+  };
+
   categoryList = [
     {text: '支出', value: '-'},
     {text: '收入', value: '+'},
@@ -41,10 +47,12 @@ export default class Money extends Vue {
 
   created() {
     this.$store.commit('fetchRecords');
+    this.$store.commit('fetchTags');
+
   }
 
   ouUpdateTags(value: string) {
-    this.record.tags.push(value);
+    this.record.tag.push(value);
   }
 
   ouUpdateNotes(value: string) {

@@ -7,7 +7,7 @@
         <ol>
           <li v-for="item in group.items" :key="item.id"
               class="record">
-            <span class="tags">{{ tagString(item.tags) }}</span>
+            <span class="tags">{{ item.tag}}</span>
             <span class="notes">{{ item.notes }}</span>
             <span>￥{{ item.amount }}</span>
           </li>
@@ -28,9 +28,6 @@ import clone from '@/lib/clone';
   components: {Tabs}
 })
 export default class statistics extends Vue {
-  tagString(tags: Tag[]) {
-    return tags.length === 0 ? '无' : tags.join(',');
-  }
 
   beautify(string: string) {
     const day = dayjs(string);
@@ -105,14 +102,6 @@ result.forEach(group=>{
       }
     }
   }
-
-  .interval-tabs {
-    .tabs-item {
-      font-size: 16px;
-      height: 32px;
-      padding: 4px 0;
-    }
-  }
 }
 
 %item {
@@ -132,6 +121,7 @@ result.forEach(group=>{
 .record {
   $fs: 14px;
   background-color: #fff;
+  border-bottom: 1px solid #e3dfdf;
   font-size: $fs;
 
   @extend %item;

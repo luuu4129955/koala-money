@@ -2,8 +2,17 @@
   <div class="tags">
     <div class="tags-list">
       <ul>
-        <li v-for="tag in defaultTags" :key="tag.id">
+        <li v-for="tag in defaultTags" :key="tag.id"
+            @click="select(tag)"
+            :class="tag.name===xxx&&'selected'">
           <Icon :name="tag.id"></Icon>
+          <span>{{ tag.name }}</span>
+        </li>
+        <li v-for="tag in createTagList" :key="tag.id"
+            @click="select(tag)"
+            :class="tag.name===xxx&&'selected'"
+        >
+          <Icon name="myCreate"></Icon>
           <span>{{ tag.name }}</span>
         </li>
         <li @click="createTag">
@@ -16,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
 import TagHelper from '@/mixins/TagHelper';
 import defaultTags from '@/lib/constant';
@@ -30,21 +39,17 @@ import defaultTags from '@/lib/constant';
   }
 })
 export default class Tags extends mixins(TagHelper) {
-  selectedTags: string[] = [];
+  @Prop(String)  xxx!: string;
   defaultTags = defaultTags;
 
   created() {
     this.$store.commit('fetchTags');
   }
 
-  toggle(tag: string) {
-    const index = this.selectedTags.indexOf(tag);
-    if (index >= 0) {
-      this.selectedTags.splice(index, 1);
-    } else {
-      this.selectedTags.push(tag);
-    }
-    this.$emit('update:value', this.selectedTags);
+  // eslint-disable-next-line no-undef
+  select(item: Tag) {
+    console.log(item.name);
+    this.$emit('update:xxx', item.name);
   }
 }
 </script>
@@ -60,7 +65,7 @@ export default class Tags extends mixins(TagHelper) {
   li {
     display: inline-flex;
     flex-direction: column;
-    width: 64px;
+    width: 56px;
     margin: 1px;
 
     .icon {
@@ -78,8 +83,20 @@ export default class Tags extends mixins(TagHelper) {
     }
 
     &.selected {
-      background-color: #a2dd9e;
-      color: #ffffff;
+      border-radius: 50%;
+      background-color: #eeffed;
+      &:active{
+        transform: translateY(4px);
+        box-shadow: 0 2px #a2dd9e;
+      }
+      .icon{
+        fill:#a2dd9e;
+        //animation: shake 500ms;
+
+      }
+      span{
+        color: #a2dd9e;
+      }
     }
   }
 

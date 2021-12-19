@@ -42,7 +42,7 @@ export default class Labels extends mixins(TagHelper) {
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
 
-$f: 18px;
+$f: 16px;
 .tags-list {
   background-color: #fff;
 
