@@ -1,10 +1,12 @@
 <template>
   <Layout>
     <Tabs :data-source="categoryList" class-prefix="category" :value.sync="category"></Tabs>
-    <div class="message" v-if="noCost()">添加你的第一笔支出~</div>
-    <div class="message" v-if="noIncome()">添加你的第一笔收入~</div>
-    {{ category }}
-    {{ recordList.map(item => item.category) }}
+    <div class="message" v-if="noCost()">添加你的第一笔支出~
+      <Icon name="arrow"></Icon>
+    </div>
+    <div class="message" v-if="noIncome()">添加你的第一笔收入~
+      <Icon name="arrow"></Icon>
+    </div>
     <ol>
       <li v-for="(group,index) in groupedList" :key="index">
         <h3 class="title">{{ beautify(group.title) }}<span>{{ group.total }}</span></h3>
@@ -35,17 +37,15 @@ import clone from '@/lib/clone';
 })
 export default class statistics extends Vue {
   noCost() {
-    const xxx = this.recordList.map((item: { category: string; }) => item.category);
     if (this.category === '-') {
-      if (xxx.map(item => item.value === '-').length === 0)
+      if (this.recordList.filter((item: { category: string; }) => item.category === '-').length === 0)
         return true;
     }
   }
 
   noIncome() {
-    const xxx = this.recordList.map((item: { category: string; }) => item.category);
     if (this.category === '+') {
-      if (xxx.map(item => item.value === '+').length === 0)
+      if (this.recordList.filter((item: { category: string; }) => item.category === '+').length === 0)
         return true;
     }
   }
@@ -79,6 +79,9 @@ export default class statistics extends Vue {
         .filter((r: { category: string; }) => r.category === this.category)
         .sort((a: { createdAt: string | number | Date | dayjs.Dayjs | null | undefined; },
                b: { createdAt: string | number | Date | dayjs.Dayjs | null | undefined; }) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
+    if (newList.length === 0) {
+      return [];
+    }
     // eslint-disable-next-line no-undef
     type Result = { title: string, total?: number, items: RecordItem[] }[];
     const result: Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
@@ -110,7 +113,11 @@ export default class statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
+@keyframes shakeY {
+  20%,40%,60%{
+    transform: translateY(10px);
+  }
+}
 ::v-deep {
   .category-tabs-item {
     background-color: #c4c4c4;
@@ -156,6 +163,21 @@ export default class statistics extends Vue {
   .notes {
     margin-right: auto;
     margin-left: 16px;
+  }
+}
+
+.message {
+  padding-top: 100%;
+  color: #a2dd9e;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  .icon {
+    width: 84px;
+    height: 84px;
+    fill: #a2dd9e;
+    margin: 20px auto 0;
+    animation: shakeY infinite 1s;
   }
 }
 </style>
