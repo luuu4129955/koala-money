@@ -1,16 +1,22 @@
 <template>
   <Layout>
     <Tabs :data-source="categoryList" class-prefix="category" :value.sync="category"></Tabs>
+    <div class="message" v-if="noCost()">添加你的第一笔支出~</div>
+    <div class="message" v-if="noIncome()">添加你的第一笔收入~</div>
+    {{ category }}
+    {{ recordList.map(item => item.category) }}
     <ol>
       <li v-for="(group,index) in groupedList" :key="index">
-        <h3 class="title">{{ beautify(group.title) }}<span>{{group.total}}</span></h3>
+        <h3 class="title">{{ beautify(group.title) }}<span>{{ group.total }}</span></h3>
         <ol>
           <li v-for="item in group.items" :key="item.id"
               class="record">
-            <span class="tags">{{ item.tag}}</span>
+            <span class="tag">{{ item.tag.name }}</span>
             <span class="notes">{{ item.notes }}</span>
             <span>￥{{ item.amount }}</span>
+
           </li>
+
         </ol>
       </li>
     </ol>
@@ -28,6 +34,21 @@ import clone from '@/lib/clone';
   components: {Tabs}
 })
 export default class statistics extends Vue {
+  noCost() {
+    const xxx = this.recordList.map((item: { category: string; }) => item.category);
+    if (this.category === '-') {
+      if (xxx.map(item => item.value === '-').length === 0)
+        return true;
+    }
+  }
+
+  noIncome() {
+    const xxx = this.recordList.map((item: { category: string; }) => item.category);
+    if (this.category === '+') {
+      if (xxx.map(item => item.value === '+').length === 0)
+        return true;
+    }
+  }
 
   beautify(string: string) {
     const day = dayjs(string);
@@ -55,11 +76,12 @@ export default class statistics extends Vue {
       return [];
     }
     const newList = clone(recordList)
-        .filter(r => r.category === this.category)
-        .sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
+        .filter((r: { category: string; }) => r.category === this.category)
+        .sort((a: { createdAt: string | number | Date | dayjs.Dayjs | null | undefined; },
+               b: { createdAt: string | number | Date | dayjs.Dayjs | null | undefined; }) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
     // eslint-disable-next-line no-undef
-    type Result={title:string,total?:number,items:RecordItem[]}[];
-    const result:Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
+    type Result = { title: string, total?: number, items: RecordItem[] }[];
+    const result: Result = [{title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'), items: [newList[0]]}];
     for (let i = 1; i < newList.length; i++) {
       const current = newList[i];
       const last = result[result.length - 1];
@@ -69,9 +91,9 @@ export default class statistics extends Vue {
         result.push({title: dayjs(current.createdAt).format('YYYY-MM-DD'), items: [current]});
       }
     }
-result.forEach(group=>{
-  group.total=group.items.reduce((sum,item)=>sum+item.amount,0)
-})
+    result.forEach(group => {
+      group.total = group.items.reduce((sum, item) => parseFloat(sum + item.amount), 0);
+    });
     return result;
   }
 
@@ -80,7 +102,6 @@ result.forEach(group=>{
   }
 
   category = '-';
-  interval = 'day';
   categoryList = [
     {text: '支出', value: '-'},
     {text: '收入', value: '+'},
@@ -126,7 +147,7 @@ result.forEach(group=>{
 
   @extend %item;
 
-  .tags {
+  .tag {
     white-space: nowrap;
     width: 64px;
     font-weight: bold;
