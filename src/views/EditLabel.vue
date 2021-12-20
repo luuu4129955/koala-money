@@ -7,12 +7,10 @@
       <span>编辑标签</span>
       <span></span>
     </div>
-    <FormItem :placeholder="tag.name" :value="tag.name"
-              @update:value="update"
+    <FormItem ref="newTag" :placeholder="tag.name" :value="tag.name"
     >标签名
     </FormItem>
-
-    <Button class="confirm" @click="xxx">确认修改</Button>
+    <Button class="confirm" @click="update($refs.newTag.value)">确认修改</Button>
     <Button class="remove" @click="remove">删除标签</Button>
   </Layout>
 </template>
@@ -32,7 +30,6 @@ export default class EditLabel extends Vue {
     return this.$store.state.currentTag;
   }
 
-
   created() {
     const id = this.$route.params.id;
     this.$store.commit('fetchTags');
@@ -44,19 +41,21 @@ export default class EditLabel extends Vue {
 
   update(name: string) {
     if (this.tag) {
+      if (!name) {
+        return window.alert('标签名不能为空！');
+      } else if (name.length > 4) {
+        return window.alert('标签名最长4个字符！');
+      }
       this.$store.commit('updateTag', {id: this.tag.id, name});
+      this.$router.replace('/labels');
     }
   }
 
   remove() {
     if (this.tag) {
       this.$store.commit('removeTag', this.tag.id);
-      this.$router.replace('/labels')
+      this.$router.replace('/labels');
     }
-  }
-
-  xxx(value: string) {
-    console.log(value);
   }
 
 }

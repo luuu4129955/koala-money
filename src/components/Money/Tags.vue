@@ -4,13 +4,13 @@
       <ul>
         <li v-for="tag in defaultTags" :key="tag.id"
             @click="select(tag)"
-            :class="tag.name===xxx&&'selected'">
+            :class="tag.name===selectTag&&'selected'">
           <Icon :name="tag.id"></Icon>
           <span>{{ tag.name }}</span>
         </li>
         <li v-for="tag in createTagList" :key="tag.id"
             @click="select(tag)"
-            :class="tag.name===xxx&&'selected'"
+            :class="tag.name===selectTag&&'selected'"
         >
           <Icon name="myCreate"></Icon>
           <span>{{ tag.name }}</span>
@@ -39,7 +39,7 @@ import defaultTags from '@/lib/constant';
   }
 })
 export default class Tags extends mixins(TagHelper) {
-  @Prop(String)  xxx!: string;
+  @Prop(String) selectTag!: string;
   defaultTags = defaultTags;
 
   created() {
@@ -48,8 +48,7 @@ export default class Tags extends mixins(TagHelper) {
 
   // eslint-disable-next-line no-undef
   select(item: Tag) {
-    console.log(item.name);
-    this.$emit('update:xxx', item.name);
+    this.$emit('update:selectTag', item.name);
   }
 }
 </script>
@@ -85,16 +84,17 @@ export default class Tags extends mixins(TagHelper) {
     &.selected {
       border-radius: 50%;
       background-color: #eeffed;
-      &:active{
+
+      &:active {
         transform: translateY(4px);
         box-shadow: 0 2px #a2dd9e;
       }
-      .icon{
-        fill:#a2dd9e;
-        //animation: shake 500ms;
 
+      .icon {
+        fill: #a2dd9e;
       }
-      span{
+
+      span {
         color: #a2dd9e;
       }
     }

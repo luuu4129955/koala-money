@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout class-prefix="layout">
-      <Tags :xxx.sync="record.tag.name" @update:value="ouUpdateTags"/>
+      <Tags :selectTag.sync="record.tag.name" />
       <FormItem @update:value="ouUpdateNotes" placeholder="在这里添加备注~">
         <Icon name="notes"></Icon>
       </FormItem>
@@ -49,10 +49,6 @@ export default class Money extends Vue {
     this.$store.commit('fetchRecords');
     this.$store.commit('fetchTags');
 
-  }
-
-  ouUpdateTags(value: string) {
-    this.record.tag.push(value);
   }
 
   ouUpdateNotes(value: string) {
