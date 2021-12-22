@@ -30,7 +30,6 @@ import {mixins} from 'vue-class-component';
 import TagHelper from '@/mixins/TagHelper';
 import defaultTags from '@/lib/constant';
 
-
 @Component({
   computed: {
     createTagList() {
@@ -45,9 +44,8 @@ export default class Tags extends mixins(TagHelper) {
   created() {
     this.$store.commit('fetchTags');
   }
-
   // eslint-disable-next-line no-undef
-  select(item: Tag) {
+  select(item: string) {
     this.$emit('update:selectTag', item.name);
   }
 }
@@ -72,7 +70,6 @@ export default class Tags extends mixins(TagHelper) {
       margin: 0 auto;
       fill: #888;
     }
-
     span {
       color: #888;
       height: 24px;
@@ -80,26 +77,21 @@ export default class Tags extends mixins(TagHelper) {
       font-size: 12px;
       text-align: center;
     }
-
     &.selected {
       border-radius: 50%;
       background-color: #eeffed;
-
       &:active {
         transform: translateY(4px);
         box-shadow: 0 2px #a2dd9e;
       }
-
       .icon {
         fill: #a2dd9e;
       }
-
       span {
         color: #a2dd9e;
       }
     }
   }
-
   .tags-add {
     color: #999;
     font-size: 14px;
@@ -108,6 +100,4 @@ export default class Tags extends mixins(TagHelper) {
 
   }
 }
-
-
 </style>

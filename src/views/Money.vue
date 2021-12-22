@@ -19,6 +19,7 @@ import Board from '@/components/Money/Board.vue';
 import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import Tabs from '@/components/Tabs.vue';
+import createId from '@/lib/createId';
 
 
 @Component({
@@ -32,6 +33,7 @@ import Tabs from '@/components/Tabs.vue';
 export default class Money extends Vue {
   // eslint-disable-next-line no-undef
   record: RecordItem = {
+    id:createId().toString(),
     tag: {id: 'foods', name: '餐饮'},
     notes: '',
     category: '-',

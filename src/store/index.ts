@@ -33,6 +33,17 @@ const store = new Vuex.Store({
     saveRecords(state) {
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
     },
+    removeRecord(state, id: string) {
+      let index = -1;
+      for (let i = 0; i < state.recordList.length; i++) {
+        if (state.recordList[i].id === id) {
+          index = i;
+          break;
+        }
+      }
+      state.recordList.splice(index, 1);
+      store.commit('saveRecords');
+    },
 
     //Tag
     fetchTags(state) {

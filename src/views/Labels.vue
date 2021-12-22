@@ -1,8 +1,8 @@
 <template>
   <div>
     <Layout>
+      <div class="topNav">编辑自定义标签</div>
       <div class="tags-list">
-
         <router-link class="tag"
                      v-for="tag in tags" :key="tag.name"
                      :to="`/labels/edit/${tag.id}`"
@@ -71,5 +71,12 @@ $f: 16px;
 .tag-add {
   background-color: #ffb850;
   color: #fff;
+}
+.topNav{
+  background-color:#a1dd9d;
+  color: #fff;
+  padding: 12px 0;
+  font-size: 20px;
+  text-align: center;
 }
 </style>

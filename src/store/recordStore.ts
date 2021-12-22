@@ -1,8 +1,6 @@
 import clone from '@/lib/clone';
 
-
 const localStorageKeyName = 'recordList';
-
 const recordStore = {
   recordList: [] as RecordItem[],
   fetchRecords() {
@@ -11,6 +9,18 @@ const recordStore = {
   },
   saveRecords() {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.recordList));
+  },
+  removeRecord(id:string){
+    let index = -1;
+    for (let i = 0; i < this.recordList.length; i++) {
+      if (this.recordList[i].id === id) {
+        index = i;
+        break;
+      }
+    }
+    this.recordList.splice(index, 1);
+    this.saveRecords();
+    return true;
   },
   createRecord(record: RecordItem) {
     const record2: RecordItem = clone(record);
