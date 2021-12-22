@@ -3,7 +3,7 @@
     <Tabs :data-source="categoryList" class-prefix="category" :value.sync="category"></Tabs>
     <Message :text="`添加你的第一笔支出~`" :no-record="noRecord('-')"></Message>
     <Message :text="`添加你的第一笔收入~`" :no-record="noRecord('+')"></Message>
-    <ol>
+    <ol class="recordList">
       <li v-for="(group,index) in groupedList" :key="index">
         <h3 class="title">{{ beautify(group.title) }}<span>{{ group.total }}</span></h3>
         <ol>
@@ -11,7 +11,7 @@
             <span class="tag">{{ item.tag.name }}</span>
             <span class="notes">{{ item.notes }}</span>
             <span>￥{{ item.amount }}</span>
-            <span class="delete" @click="xxx">删除</span>
+            <span class="delete" @click="remove">删除</span>
           </li>
         </ol>
       </li>
@@ -25,7 +25,7 @@ import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
 import dayjs from 'dayjs';
 import clone from '@/lib/clone';
-import Message from '@/components/Money/Message.vue';
+import Message from '@/components/Message.vue';
 
 @Component({
   components: {Message, Tabs}
@@ -48,9 +48,9 @@ export default class statistics extends Vue {
     }
   }
 
-  xxx() {
+  remove() {
     console.log('执行了');
-    this.re;
+    // this.re;
     if (this.recordList) {
       this.$store.commit('removeRecord', this.recordList.id);
     }
@@ -116,19 +116,26 @@ export default class statistics extends Vue {
 }
 
 ::v-deep {
-  .category-tabs-item {
-    background-color: #c4c4c4;
+  .category-tabs{
+    position: absolute;
+    top:0;
+    width: 100%;
+    &-item {
+      background-color: #c4c4c4;
+      &.selected {
+        background-color: #a2dd9e;
 
-    &.selected {
-      background-color: #a2dd9e;
-
-      &::after {
-        display: none;
+        &::after {
+          display: none;
+        }
       }
     }
   }
-}
 
+}
+.recordList{
+  margin-top: 50.4px;
+}
 %item {
   padding: 8px 16px;
   line-height: 24px;
@@ -164,20 +171,6 @@ export default class statistics extends Vue {
 
   .delete {
     color: red;
-  }
-}
-
-.message {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  padding-top: 100%;
-
-  .icon {
-    width: 72px;
-    height: 72px;
-    margin: 20px auto 0;
-    animation: shakeY infinite 1s;
   }
 }
 
