@@ -163,6 +163,7 @@ export default class statistics extends Vue {
   @extend %item;
 
   .icon {
+    width: 20px;
     fill: #3C4469;
     margin-right: 16px;
   }
