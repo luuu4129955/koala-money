@@ -10,7 +10,7 @@
         </li>
         <li v-for="tag in createTagList" :key="tag.id"
             @click="select(tag)"
-            :class="tag.name===selectTag&&'selected'"
+            :class="tag.name===selectTag.name&&'selected'"
         >
           <Icon name="myCreate"></Icon>
           <span>{{ tag.name }}</span>
