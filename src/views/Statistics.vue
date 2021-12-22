@@ -13,10 +13,11 @@
         <ol>
           <li v-for="item in group.items" :key="item.id"
               class="record">
-            <span class="tag">{{ item.tag.name }}</span>
+            <span class="tag">
+              {{ item.tag.name }}</span>
             <span class="notes">{{ item.notes }}</span>
             <span>￥{{ item.amount }}</span>
-
+            <span class="delete" @click="xxx">删除</span>
           </li>
 
         </ol>
@@ -36,6 +37,16 @@ import clone from '@/lib/clone';
   components: {Tabs}
 })
 export default class statistics extends Vue {
+  category = '-';
+  categoryList = [
+    {text: '支出', value: '-'},
+    {text: '收入', value: '+'},
+  ];
+
+  created() {
+    this.$store.commit('fetchRecords');
+  }
+
   noCost() {
     if (this.category === '-') {
       if (this.recordList.filter((item: { category: string; }) => item.category === '-').length === 0)
@@ -47,6 +58,14 @@ export default class statistics extends Vue {
     if (this.category === '+') {
       if (this.recordList.filter((item: { category: string; }) => item.category === '+').length === 0)
         return true;
+    }
+  }
+
+  xxx() {
+    console.log('执行了');
+    console.log(this.recordList);
+    if (this.recordList) {
+      this.$store.commit('removeRecord', this.recordList.id);
     }
   }
 
@@ -99,25 +118,16 @@ export default class statistics extends Vue {
     });
     return result;
   }
-
-  created() {
-    this.$store.commit('fetchRecords');
-  }
-
-  category = '-';
-  categoryList = [
-    {text: '支出', value: '-'},
-    {text: '收入', value: '+'},
-  ];
 }
 </script>
 
 <style lang="scss" scoped>
 @keyframes shakeY {
-  20%,40%,60%{
+  20%, 40%, 60% {
     transform: translateY(10px);
   }
 }
+
 ::v-deep {
   .category-tabs-item {
     background-color: #c4c4c4;
@@ -164,20 +174,11 @@ export default class statistics extends Vue {
     margin-right: auto;
     margin-left: 16px;
   }
-}
 
-.message {
-  padding-top: 100%;
-  color: #a2dd9e;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  .icon {
-    width: 84px;
-    height: 84px;
-    fill: #a2dd9e;
-    margin: 20px auto 0;
-    animation: shakeY infinite 1s;
+  .delete {
+    color: red;
   }
 }
+
+
 </style>
