@@ -16,7 +16,7 @@ export default class Button extends Vue {
 $f: 18px;
 .btn {
   text-align: center;
-  margin: 64px $f 0 $f;
+  margin: 64px $f 64px $f;
   padding: $f/2 $f;
   border-radius: 8px;
   letter-spacing: 6px;
