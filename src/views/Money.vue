@@ -19,8 +19,6 @@ import Board from '@/components/Money/Board.vue';
 import Tags from '@/components/Money/Tags.vue';
 import FormItem from '@/components/Money/FormItem.vue';
 import Tabs from '@/components/Tabs.vue';
-import createId from '@/lib/createId';
-
 
 @Component({
   components: {Tabs, FormItem, Tags, Board},

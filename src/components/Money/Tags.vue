@@ -4,7 +4,7 @@
       <ul>
         <li v-for="tag in defaultTags" :key="tag.id"
             @click="select(tag)"
-            :class="tag.name===selectTag&&'selected'">
+            :class="tag.name===selectTag.name&&'selected'">
           <Icon :name="tag.id"></Icon>
           <span>{{ tag.name }}</span>
         </li>
@@ -38,15 +38,21 @@ import defaultTags from '@/lib/constant';
   }
 })
 export default class Tags extends mixins(TagHelper) {
-  @Prop(String) selectTag!: string;
+  // eslint-disable-next-line no-undef
+  @Prop(Object) selectTag!: Tag;
   defaultTags = defaultTags;
 
   created() {
     this.$store.commit('fetchTags');
   }
+
   // eslint-disable-next-line no-undef
-  select(item: string) {
-    this.$emit('update:selectTag', item.name);
+  select(item: Tag) {
+    console.log('执行了');
+    const {id, name} = item;
+    console.log(id);
+    console.log(name);
+    this.$emit('update:selectTag', {id,name});
   }
 }
 </script>
@@ -70,6 +76,7 @@ export default class Tags extends mixins(TagHelper) {
       margin: 0 auto;
       fill: #888;
     }
+
     span {
       color: #888;
       height: 24px;
@@ -77,21 +84,26 @@ export default class Tags extends mixins(TagHelper) {
       font-size: 12px;
       text-align: center;
     }
+
     &.selected {
       border-radius: 50%;
       background-color: #eeffed;
+
       &:active {
         transform: translateY(4px);
         box-shadow: 0 2px #a2dd9e;
       }
+
       .icon {
         fill: #a2dd9e;
       }
+
       span {
         color: #a2dd9e;
       }
     }
   }
+
   .tags-add {
     color: #999;
     font-size: 14px;

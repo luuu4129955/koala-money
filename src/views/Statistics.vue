@@ -8,7 +8,8 @@
         <h3 class="title">{{ beautify(group.title) }}<span>{{ group.total }}</span></h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
-            <span class="tag">{{ item.tag.name }}</span>
+            <Icon :name="isNaN(parseInt(item.tag.name.id))?item.tag.name.id:'myCreate'"></Icon>
+            <span class="tag">{{ item.tag.name.name }}</span>
             <span class="notes">{{ item.notes }}</span>
             <span>￥{{ item.amount }}</span>
             <span class="delete" @click="remove">删除</span>
@@ -41,7 +42,7 @@ export default class statistics extends Vue {
     this.$store.commit('fetchRecords');
   }
 
-  noRecord(string:string){
+  noRecord(string: string) {
     if (this.category === string) {
       if (this.recordList.filter((item: { category: string; }) => item.category === string).length === 0)
         return true;
@@ -50,7 +51,6 @@ export default class statistics extends Vue {
 
   remove() {
     console.log('执行了');
-    // this.re;
     if (this.recordList) {
       this.$store.commit('removeRecord', this.recordList.id);
     }
@@ -116,12 +116,14 @@ export default class statistics extends Vue {
 }
 
 ::v-deep {
-  .category-tabs{
+  .category-tabs {
     position: absolute;
-    top:0;
+    top: 0;
     width: 100%;
+
     &-item {
       background-color: #c4c4c4;
+
       &.selected {
         background-color: #a2dd9e;
 
@@ -133,9 +135,11 @@ export default class statistics extends Vue {
   }
 
 }
-.recordList{
+
+.recordList {
   margin-top: 50.4px;
 }
+
 %item {
   padding: 8px 16px;
   line-height: 24px;
@@ -157,6 +161,11 @@ export default class statistics extends Vue {
   font-size: $fs;
 
   @extend %item;
+
+  .icon {
+    fill: #3C4469;
+    margin-right: 16px;
+  }
 
   .tag {
     white-space: nowrap;
