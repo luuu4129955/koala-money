@@ -1,25 +1,18 @@
 <template>
   <Layout>
     <Tabs :data-source="categoryList" class-prefix="category" :value.sync="category"></Tabs>
-    <div class="message" v-if="noCost()">添加你的第一笔支出~
-      <Icon name="arrow"></Icon>
-    </div>
-    <div class="message" v-if="noIncome()">添加你的第一笔收入~
-      <Icon name="arrow"></Icon>
-    </div>
+    <Message :text="`添加你的第一笔支出~`" :no-record="noRecord('-')"></Message>
+    <Message :text="`添加你的第一笔收入~`" :no-record="noRecord('+')"></Message>
     <ol>
       <li v-for="(group,index) in groupedList" :key="index">
         <h3 class="title">{{ beautify(group.title) }}<span>{{ group.total }}</span></h3>
         <ol>
-          <li v-for="item in group.items" :key="item.id"
-              class="record">
-            <span class="tag">
-              {{ item.tag.name }}</span>
+          <li v-for="item in group.items" :key="item.id" class="record">
+            <span class="tag">{{ item.tag.name }}</span>
             <span class="notes">{{ item.notes }}</span>
             <span>￥{{ item.amount }}</span>
             <span class="delete" @click="xxx">删除</span>
           </li>
-
         </ol>
       </li>
     </ol>
@@ -32,9 +25,10 @@ import {Component} from 'vue-property-decorator';
 import Tabs from '@/components/Tabs.vue';
 import dayjs from 'dayjs';
 import clone from '@/lib/clone';
+import Message from '@/components/Money/Message.vue';
 
 @Component({
-  components: {Tabs}
+  components: {Message, Tabs}
 })
 export default class statistics extends Vue {
   category = '-';
@@ -47,23 +41,16 @@ export default class statistics extends Vue {
     this.$store.commit('fetchRecords');
   }
 
-  noCost() {
-    if (this.category === '-') {
-      if (this.recordList.filter((item: { category: string; }) => item.category === '-').length === 0)
-        return true;
-    }
-  }
-
-  noIncome() {
-    if (this.category === '+') {
-      if (this.recordList.filter((item: { category: string; }) => item.category === '+').length === 0)
+  noRecord(string:string){
+    if (this.category === string) {
+      if (this.recordList.filter((item: { category: string; }) => item.category === string).length === 0)
         return true;
     }
   }
 
   xxx() {
     console.log('执行了');
-    console.log(this.recordList);
+    this.re;
     if (this.recordList) {
       this.$store.commit('removeRecord', this.recordList.id);
     }
@@ -180,5 +167,18 @@ export default class statistics extends Vue {
   }
 }
 
+.message {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding-top: 100%;
+
+  .icon {
+    width: 72px;
+    height: 72px;
+    margin: 20px auto 0;
+    animation: shakeY infinite 1s;
+  }
+}
 
 </style>
