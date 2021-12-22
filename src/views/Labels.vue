@@ -45,6 +45,8 @@ export default class Labels extends mixins(TagHelper) {
 $f: 16px;
 .tags-list {
   background-color: #fff;
+  margin-top: 50.4px;
+
 
   .tag {
     display: flex;
@@ -72,11 +74,15 @@ $f: 16px;
   background-color: #ffb850;
   color: #fff;
 }
-.topNav{
-  background-color:#a1dd9d;
+
+.topNav {
+  background-color: #a1dd9d;
   color: #fff;
   padding: 12px 0;
   font-size: 20px;
   text-align: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 </style>
