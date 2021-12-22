@@ -33,7 +33,7 @@ import createId from '@/lib/createId';
 export default class Money extends Vue {
   // eslint-disable-next-line no-undef
   record: RecordItem = {
-    id:createId().toString(),
+    id:'',
     tag: {id: 'foods', name: '餐饮'},
     notes: '',
     category: '-',
@@ -50,7 +50,6 @@ export default class Money extends Vue {
   created() {
     this.$store.commit('fetchRecords');
     this.$store.commit('fetchTags');
-
   }
 
   ouUpdateNotes(value: string) {

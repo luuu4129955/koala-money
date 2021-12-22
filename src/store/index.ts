@@ -24,11 +24,12 @@ const store = new Vuex.Store({
     },
     createRecord(state, record: RecordItem) {
       const record2: RecordItem = clone(record);
-      record2.createdAt = new Date().toISOString();
-      state.recordList.push(record2);
+      const {tag,notes,category,amount}=record2;
+      let {createdAt}=record2;
+      createdAt = new Date().toISOString();
+      const id=createId().toString();
+      state.recordList.push({id,tag,notes,category,amount,createdAt});
       store.commit('saveRecords');
-      //TODO
-      //recordStore.saveRecords();
     },
     saveRecords(state) {
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
