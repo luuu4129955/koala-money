@@ -1,7 +1,7 @@
 <template>
   <div>
     <Layout class-prefix="layout">
-      <Tags :selectTag.sync="record.tag.name" />
+      <Tags :selectTag.sync="record.tag" />
       <FormItem @update:value="ouUpdateNotes" placeholder="在这里添加备注~">
         <Icon name="notes"></Icon>
       </FormItem>
