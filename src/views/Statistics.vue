@@ -8,8 +8,8 @@
         <h3 class="title">{{ beautify(group.title) }}<span>{{ group.total }}</span></h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
-            <Icon :name="isNaN(parseInt(item.tag.name.id))?item.tag.name.id:'myCreate'"></Icon>
-            <span class="tag">{{ item.tag.name.name }}</span>
+            <Icon :name="isNaN(parseInt(item.tag.id))?item.tag.id:'myCreate'"></Icon>
+            <span class="tag">{{ item.tag.name }}</span>
             <span class="notes">{{ item.notes }}</span>
             <span>￥{{ item.amount }}</span>
             <span class="delete" @click="remove">删除</span>
