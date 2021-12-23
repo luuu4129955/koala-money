@@ -90,6 +90,6 @@ export default class EditLabel extends Vue {
 .remove {
   background-color: #f76361;
   color: #fff;
-  margin-top: 10px;
+  margin-top: -50px;
 }
 </style>
