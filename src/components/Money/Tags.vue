@@ -48,11 +48,8 @@ export default class Tags extends mixins(TagHelper) {
 
   // eslint-disable-next-line no-undef
   select(item: Tag) {
-    console.log('执行了');
     const {id, name} = item;
-    console.log(id);
-    console.log(name);
-    this.$emit('update:selectTag', {id,name});
+    this.$emit('update:selectTag', {id, name});
   }
 }
 </script>
@@ -63,8 +60,7 @@ export default class Tags extends mixins(TagHelper) {
   flex-grow: 1;
   overflow: auto;
   background-color: #fff;
-  padding: 4px;
-
+  padding: 13px;
   li {
     display: inline-flex;
     flex-direction: column;
