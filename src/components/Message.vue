@@ -11,7 +11,7 @@ import {Component, Prop} from 'vue-property-decorator';
 @Component
 export default class Message extends Vue {
   @Prop(String) text: string | undefined;
-  @Prop(Boolean) noRecord: !undefined;
+  @Prop(Boolean) noRecord: undefined;
 
 }
 </script>

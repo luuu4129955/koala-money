@@ -35,25 +35,26 @@ export default class Board extends Vue {
   output = '0';
 
   inputContent(event: MouseEvent) {
-    const button = event.target?.textContent;
-    const input = (button as string);
-    console.log(input);
-
-    if (this.output.length === 16) {
-      return;
-    }
-    if (this.output === '0') {
-      if ('0123456789'.indexOf(input) >= 0) {
-        this.output = input;
-      } else {
-        this.output += input;
+    const button = (event.target as HTMLButtonElement);
+    const input = button.textContent;
+    if (input !== null) {
+      if (this.output.length === 16) {
+        return;
       }
-      return;
+      if (this.output === '0') {
+        if ('0123456789'.indexOf(input) >= 0) {
+          this.output = input;
+        } else {
+          this.output += input;
+        }
+        return;
+      }
+      if (this.output.indexOf('.') >= 0 && input === '.') {
+        return;
+      }
+      this.output += input;
     }
-    if (this.output.indexOf('.') >= 0 && input === '.') {
-      return;
-    }
-    this.output += input;
+
   }
 
   back() {
