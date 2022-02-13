@@ -1,25 +1,23 @@
 <template>
   <div class="tags">
     <div class="tags-list">
-      <ul>
-        <li v-for="tag in defaultTags" :key="tag.id"
-            @click="select(tag)"
-            :class="tag.name===selectTag.name&&'selected'">
-          <Icon :name="tag.id"></Icon>
-          <span>{{ tag.name }}</span>
-        </li>
-        <li v-for="tag in createTagList" :key="tag.id"
-            @click="select(tag)"
-            :class="tag.name===selectTag.name&&'selected'"
-        >
-          <Icon name="myCreate"></Icon>
-          <span>{{ tag.name }}</span>
-        </li>
-        <li @click="createTag">
-          <Icon name="add"></Icon>
-          <span>自定义</span>
-        </li>
-      </ul>
+      <div class="tag" v-for="tag in defaultTags" :key="tag.id"
+           @click="select(tag)"
+           :class="tag.name===selectTag.name&&'selected'">
+        <Icon :name="tag.id"></Icon>
+        <span>{{ tag.name }}</span>
+      </div>
+      <div class="tag" v-for="tag in createTagList" :key="tag.id"
+           @click="select(tag)"
+           :class="tag.name===selectTag.name&&'selected'"
+      >
+        <Icon name="myCreate"></Icon>
+        <span>{{ tag.name }}</span>
+      </div>
+      <div class="tag" @click="createTag">
+        <Icon name="add"></Icon>
+        <span>自定义</span>
+      </div>
     </div>
   </div>
 </template>
@@ -60,13 +58,17 @@ export default class Tags extends mixins(TagHelper) {
   flex-grow: 1;
   overflow: auto;
   background-color: #fff;
-  padding: 13px;
-  li {
+  align-items: center;
+  .tags-list {
+    max-width: 500px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .tag {
     display: inline-flex;
     flex-direction: column;
-    width: 56px;
-    margin: 1px;
-
+    flex:0 0 20%;
+    margin-bottom: 3px;
     .icon {
       padding: 8px;
       margin: 0 auto;
